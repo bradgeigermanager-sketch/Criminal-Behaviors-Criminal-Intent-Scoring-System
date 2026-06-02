@@ -1,0 +1,254 @@
+---
+
+# ⭐ Behavioral‑Risk Schema Suite  
+### (Modular JSON Schemas for Criminal Behavior & Intent Modeling)
+
+This suite contains **five interoperable schemas**:
+
+1. **Core Behavioral Risk Schema**  
+2. **Criminal Intent Indicators Schema**  
+3. **Violence‑Risk Indicators Schema**  
+4. **Pre‑Incident Behavior Schema**  
+5. **Case Metadata Schema**
+
+Each schema is standalone but designed to integrate cleanly.
+
+---
+
+# 1️⃣ **Core Behavioral Risk Schema**  
+*(This is your existing insider‑threat schema — now formalized as the “core” module.)*
+
+```json
+{
+  "$id": "https://schemas.example.com/behavioral/core.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CoreBehavioralRisk",
+  "type": "object",
+
+  "properties": {
+    "subjectId": { "type": "string" },
+    "assessmentDate": { "type": "string", "format": "date-time" },
+    "assessor": { "type": "string" },
+
+    "indicators": {
+      "type": "object",
+      "properties": {
+        "personalGrievance": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "weaponsBehavior": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "explosivesInterest": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "massAttackFascination": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "behavioralEscalation": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "lifeStressors": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "targetIdentification": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "policyViolations": { "type": "integer", "minimum": 0, "maximum": 3 }
+      },
+      "required": [
+        "personalGrievance",
+        "weaponsBehavior",
+        "explosivesInterest",
+        "massAttackFascination",
+        "behavioralEscalation",
+        "lifeStressors",
+        "targetIdentification",
+        "policyViolations"
+      ]
+    },
+
+    "weightedScore": { "type": "number" },
+    "riskLevel": {
+      "type": "string",
+      "enum": ["Low", "Elevated", "Concerning", "High", "Critical"]
+    },
+
+    "notes": { "type": "string" }
+  },
+
+  "required": [
+    "subjectId",
+    "assessmentDate",
+    "assessor",
+    "indicators",
+    "weightedScore",
+    "riskLevel"
+  ]
+}
+```
+
+---
+
+# 2️⃣ **Criminal Intent Indicators Schema**  
+### (Behavioral signs of planning, preparation, or intent)
+
+```json
+{
+  "$id": "https://schemas.example.com/behavioral/criminal_intent.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CriminalIntentIndicators",
+  "type": "object",
+
+  "properties": {
+    "subjectId": { "type": "string" },
+
+    "intentIndicators": {
+      "type": "object",
+      "properties": {
+        "surveillanceBehavior": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Pre‑incident surveillance, casing, unusual observation patterns."
+        },
+        "acquisitionOfTools": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Obtaining tools or materials that could facilitate a crime."
+        },
+        "expressedIntent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Statements suggesting desire or plan to commit harm."
+        },
+        "ideationOrFixation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Fixation on a target, grievance, or violent outcome."
+        },
+        "boundaryTesting": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Attempts to bypass rules, access restrictions, or security."
+        }
+      },
+      "required": [
+        "surveillanceBehavior",
+        "acquisitionOfTools",
+        "expressedIntent",
+        "ideationOrFixation",
+        "boundaryTesting"
+      ]
+    }
+  },
+
+  "required": ["subjectId", "intentIndicators"]
+}
+```
+
+---
+
+# 3️⃣ **Violence‑Risk Indicators Schema**  
+### (Behavioral precursors to violence — aligned with FBI threat‑assessment principles)
+
+```json
+{
+  "$id": "https://schemas.example.com/behavioral/violence_risk.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ViolenceRiskIndicators",
+  "type": "object",
+
+  "properties": {
+    "subjectId": { "type": "string" },
+
+    "violenceIndicators": {
+      "type": "object",
+      "properties": {
+        "threateningStatements": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "leakageOfIntent": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "interpersonalConflict": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "emotionalDysregulation": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "recentLossOrTrauma": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "isolationOrWithdrawal": { "type": "integer", "minimum": 0, "maximum": 3 }
+      },
+      "required": [
+        "threateningStatements",
+        "leakageOfIntent",
+        "interpersonalConflict",
+        "emotionalDysregulation",
+        "recentLossOrTrauma",
+        "isolationOrWithdrawal"
+      ]
+    }
+  },
+
+  "required": ["subjectId", "violenceIndicators"]
+}
+```
+
+---
+
+# 4️⃣ **Pre‑Incident Behavior Schema**  
+### (Captures observable actions before a criminal event)
+
+```json
+{
+  "$id": "https://schemas.example.com/behavioral/pre_incident.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PreIncidentBehavior",
+  "type": "object",
+
+  "properties": {
+    "subjectId": { "type": "string" },
+
+    "preIncident": {
+      "type": "object",
+      "properties": {
+        "unusualTravel": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "suddenFinancialChanges": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "attemptsToProcureSensitiveInfo": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "changesInRoutine": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "communicationsChanges": { "type": "integer", "minimum": 0, "maximum": 3 }
+      },
+      "required": [
+        "unusualTravel",
+        "suddenFinancialChanges",
+        "attemptsToProcureSensitiveInfo",
+        "changesInRoutine",
+        "communicationsChanges"
+      ]
+    }
+  },
+
+  "required": ["subjectId", "preIncident"]
+}
+```
+
+---
+
+# 5️⃣ **Case Metadata Schema**  
+### (Unifies all modules into a single case record)
+
+```json
+{
+  "$id": "https://schemas.example.com/behavioral/case_metadata.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CaseMetadata",
+  "type": "object",
+
+  "properties": {
+    "caseId": { "type": "string" },
+    "subjectId": { "type": "string" },
+    "createdDate": { "type": "string", "format": "date-time" },
+    "lastUpdated": { "type": "string", "format": "date-time" },
+
+    "modulesIncluded": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "CoreBehavioralRisk",
+          "CriminalIntentIndicators",
+          "ViolenceRiskIndicators",
+          "PreIncidentBehavior"
+        ]
+      }
+    }
+  },
+
+  "required": ["caseId", "subjectId", "createdDate", "modulesIncluded"]
+}
+```
+
+---
